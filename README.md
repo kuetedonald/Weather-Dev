@@ -1,4 +1,4 @@
-# Goose Weather
+# Richie Weather
 - Weather application that I named for my wife, lovingly referred to as Goose
 - Application is built with Angular and uses [NOAA APIs](https://www.weather.gov/documentation/services-web-api) and the [OpenWeatherMapAPI Service](https://openweathermap.org/api) to create a weather forecast
 - Application uses the following platforms and frameworks:
