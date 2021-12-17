@@ -1,0 +1,49 @@
+<mat-card class="mat-elevation-z5" >
+  <mat-card-header>
+    <img
+        src="../../assets/sun_icon.ico"
+        mat-card-avatar />
+    <mat-card-title>Richie weather 1.0</mat-card-title>
+    <mat-card-subtitle>Today: {{ todayDate | date:'fullDate' }}</mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content>
+    <div class="flex-row">
+      <mat-form-field class="location-search">
+        <input matInput [matAutocomplete]="auto" [formControl]="citiesCtrl" placeholder="Select Location">
+        <button mat-button *ngIf="citiesCtrl.value" matSuffix mat-icon-button aria-label="Clear" (click)="citiesCtrl.setValue('')">
+          <mat-icon>close</mat-icon>
+        </button>
+        <mat-autocomplete #auto="matAutocomplete" (optionSelected)="onSelectionChanged($event)">
+          <mat-option *ngFor="let city of filteredCities | async" [value]="city.combinedName">
+            <span>{{city.combinedName}}</span>
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+    </div>    
+	
+	<div class="flex-row" *ngIf="error$ | async as error">
+		<h1 class="error-message" ><mat-icon>error</mat-icon> {{ error }}</h1>
+		<mat-card-actions>
+			<button mat-button (click)="reloadComponent()">Reload<mat-icon>refresh</mat-icon></button>
+		</mat-card-actions>
+    </div>
+  </mat-card-content>
+
+</mat-card>
+
+<div class="page">
+<mat-grid-list cols="3" rowHeight="29em">
+  <mat-grid-tile *ngFor="let card of cards | async"  [colspan]="card.cols" [rowspan]="card.rows">
+	<mat-card class="dashboard-card">
+	  <mat-card-header>
+		<mat-card-title class="title">
+		  {{card.title}}
+		</mat-card-title>
+	  </mat-card-header>
+	  <mat-card-content class="dashboard-card-content">
+		<ng-container *ngComponentOutlet="card.component"></ng-container>
+	  </mat-card-content>
+	</mat-card>
+  </mat-grid-tile>
+</mat-grid-list>
+</div>
